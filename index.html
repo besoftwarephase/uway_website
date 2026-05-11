@@ -35,6 +35,7 @@
   --ease:cubic-bezier(.22,.61,.36,1);
   --ease-out:cubic-bezier(.16,1,.3,1);
   --container:1280px;
+  --header-h:70px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -63,35 +64,64 @@ body::before{
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
 }
 
+.form-input.error, .form-textarea.error, .form-select.error {
+  border-color: #ef4444 !important;
+  background: rgba(239,68,68,0.05) !important;
+}
+.form-input.success, .form-textarea.success, .form-select.success {
+  border-color: #2ea843 !important;
+  background: rgba(46,168,67,0.04) !important;
+}
+
+
+.error-msg {
+  color: #ef4444;
+  font-size: 12.5px;
+  margin-top: 6px;
+  display: none;
+  letter-spacing:-.005em;
+}
+.error-msg.show { display: block; }
+
 .container{max-width:var(--container);margin:0 auto;padding:0 28px}
 @media (max-width:640px){.container{padding:0 20px}}
 
 /* ============================================================
-   HEADER
+   HEADER — FIXED WITH CONSISTENT HEIGHT
    ============================================================ */
 .site-header{
   position:fixed;
   top:0;left:0;right:0;
+  width:100%;
   z-index:100;
-  padding:18px 0;
-  background:rgba(10,10,12,0.7);
+  height:var(--header-h);
+  display:flex;
+  align-items:center;
+  background:rgba(10,10,12,0.85);
   backdrop-filter:blur(18px) saturate(140%);
   -webkit-backdrop-filter:blur(18px) saturate(140%);
   border-bottom:1px solid var(--line);
-  transition:padding .3s var(--ease);
+  transition:background .3s var(--ease), box-shadow .3s var(--ease);
 }
-.site-header.scrolled{padding:12px 0}
+.site-header.scrolled{
+  background:rgba(10,10,12,0.95);
+  box-shadow:0 1px 0 var(--line);
+}
+
 .nav{
   display:flex;align-items:center;justify-content:space-between;
+  width:100%;
   max-width:var(--container);
-  margin:0 auto;padding:0 28px;
+  margin:0 auto;
+  padding:0 28px;
 }
 .logo{
   display:flex;align-items:center;
-  height:34px;
+  height:32px;
+  flex-shrink:0;
 }
 .logo svg{height:100%;width:auto}
-.logo-link{display:block}
+.logo-link{display:block;flex-shrink:0}
 
 .nav-links{
   display:flex;align-items:center;gap:8px;
@@ -105,6 +135,7 @@ body::before{
   letter-spacing:-.01em;
   border-radius:999px;
   transition:color .25s var(--ease), background .25s var(--ease);
+  white-space:nowrap;
 }
 .nav-link:hover{color:#5584f2;background:rgba(255,255,255,0.04)}
 .nav-link.active{color:var(--white);background:rgba(255,255,255,0.06)}
@@ -115,6 +146,8 @@ body::before{
   background:var(--white);color:#0a0a0c;
   font-size:13.5px;font-weight:600;letter-spacing:-.01em;
   border-radius:999px;
+  white-space:nowrap;
+  flex-shrink:0;
   transition:transform .25s var(--ease), box-shadow .25s var(--ease);
 }
 .nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(255,255,255,0.15)}
@@ -127,6 +160,7 @@ body::before{
   border-radius:999px;
   background:rgba(255,255,255,0.04);
   border:1px solid var(--line);
+  flex-shrink:0;
 }
 .menu-toggle span{
   display:block;width:18px;height:1.5px;background:var(--white);
@@ -142,42 +176,52 @@ body::before{
 .menu-toggle.open span::before{top:0;transform:rotate(45deg)}
 .menu-toggle.open span::after{top:0;transform:rotate(-45deg)}
 
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
 .mobile-menu{
   position:fixed;
-  top:0;left:0;right:0;bottom:0;
+  top:var(--header-h);
+  left:0;right:0;bottom:0;
   background:rgba(10,10,12,0.98);
   backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
   z-index:99;
-  padding:100px 28px 40px;
-  transform:translateY(-100%);
+  padding:24px 20px 40px;
+  transform:translateY(-110%);
   transition:transform .45s var(--ease-out);
-  display:flex;flex-direction:column;gap:6px;
+  display:flex;flex-direction:column;gap:4px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 .mobile-menu.open{transform:translateY(0)}
 .mobile-menu .nav-link{
-  font-size: 13px;
-    font-weight: 300;
-    padding: 12px 10px;
-    border-radius: 4px;
-    border-bottom: 1px solid var(--line);
-    letter-spacing: -.025em;
-    margin-top: 10px;
+  font-size:15px;
+  font-weight:400;
+  padding:16px 12px;
+  border-radius:4px;
+  border-bottom:1px solid var(--line);
+  letter-spacing:-.015em;
 }
+.mobile-menu .nav-link:last-of-type{border-bottom:none}
 .mobile-menu .nav-cta{
-  margin-top:24px;align-self:flex-start;
+  margin-top:20px;align-self:flex-start;
   padding:14px 26px;font-size:15px;
 }
 
 @media (max-width:880px){
   .nav-links{display:none}
   .menu-toggle{display:flex}
-  .nav > .nav-cta{display:none}
+  .nav>.nav-cta{display:none}
+}
+@media (max-width:640px){
+  .nav{padding:0 16px}
 }
 
 /* ============================================================
    PAGE SYSTEM
    ============================================================ */
-.page{display:none;padding-top:82px}
+.page{display:none;padding-top:var(--header-h)}
 .page.active{display:block}
 main{position:relative;z-index:2}
 
@@ -188,6 +232,9 @@ main{position:relative;z-index:2}
   position:relative;
   padding:100px 0 80px;
   overflow:hidden;
+}
+@media (max-width:640px){
+  .hero{padding:60px 0 60px}
 }
 .hero-bg{
   position:absolute;inset:0;pointer-events:none;
@@ -456,7 +503,7 @@ section{padding:120px 0;position:relative}
 }
 
 /* ============================================================
-   SERVICES — EQUAL CARDS
+   SERVICES
    ============================================================ */
 .services{position:relative}
 .services-grid{
@@ -590,7 +637,7 @@ section{padding:120px 0;position:relative}
   position:relative;
   transition:background .3s var(--ease);
 }
-.why-item:hover{background:rgba(255,255,255,0.02);border-radius: 2px;}
+.why-item:hover{background:rgba(255,255,255,0.02);border-radius:2px;}
 .why-item:nth-child(3n){border-right:none}
 .why-item:nth-last-child(-n+3){border-bottom:none}
 .why-icon{
@@ -661,7 +708,7 @@ section{padding:120px 0;position:relative}
 .marquee-logo svg{width:26px;height:26px}
 
 /* ============================================================
-   REVIEWS — Continuous left-to-right scrolling
+   REVIEWS
    ============================================================ */
 .reviews{}
 .reviews-viewport{
@@ -785,7 +832,7 @@ section{padding:120px 0;position:relative}
 .world-map{
   position:relative;
   width:100%;
-  aspect-ratio: 16/8;
+  aspect-ratio:16/8;
   max-height:560px;
   margin-top:20px;
 }
@@ -860,6 +907,10 @@ section{padding:120px 0;position:relative}
 .location-pill:hover{background:rgba(59,110,245,0.08);border-color:rgba(59,110,245,0.3)}
 .location-pill svg{width:14px;height:14px;color:var(--blue-2);flex-shrink:0}
 @media (max-width:880px){.locations-list{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){
+  .map-wrap{padding:24px 20px}
+  .locations-list{grid-template-columns:repeat(2,1fr);gap:8px}
+}
 
 /* ============================================================
    CONTACT FORM
@@ -918,7 +969,10 @@ section{padding:120px 0;position:relative}
   display:grid;grid-template-columns:1fr 1fr;gap:16px;
   margin-bottom:16px;
 }
-@media (max-width:640px){.form-row{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  .form-card{padding:24px 20px}
+}
 
 .form-group{margin-bottom:16px;position:relative}
 .form-label{
@@ -962,11 +1016,12 @@ section{padding:120px 0;position:relative}
   background:var(--white);color:#0a0a0c;
   border-radius:999px;font-weight:600;font-size:14.5px;
   margin-top:8px;
-  transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), opacity .25s var(--ease);
 }
 .form-submit:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,255,255,0.18)}
+.form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 .form-submit svg{width:14px;height:14px;transition:transform .3s var(--ease)}
-.form-submit:hover svg{transform:translateX(3px)}
+.form-submit:hover:not(:disabled) svg{transform:translateX(3px)}
 
 .form-success{
   display:none;
@@ -978,6 +1033,17 @@ section{padding:120px 0;position:relative}
   margin-top:16px;
 }
 .form-success.show{display:block;animation:fadeUp .4s var(--ease-out)}
+
+.form-error-banner{
+  display:none;
+  padding:14px 18px;
+  background:rgba(239,68,68,0.08);
+  border:1px solid rgba(239,68,68,0.3);
+  border-radius:12px;
+  color:#fca5a5;font-size:14px;
+  margin-top:16px;
+}
+.form-error-banner.show{display:block;animation:fadeUp .4s var(--ease-out)}
 
 /* ============================================================
    ABOUT PAGE
@@ -1500,7 +1566,7 @@ section{padding:120px 0;position:relative}
     </div>
   </section>
 
-  <!-- REVIEWS — auto-scroll left to right -->
+  <!-- REVIEWS -->
   <section class="reviews">
     <div class="container">
       <div class="section-head">
@@ -1512,9 +1578,7 @@ section{padding:120px 0;position:relative}
     </div>
 
     <div class="reviews-viewport" id="reviewsViewport">
-      <div class="reviews-track" id="reviewsTrack">
-        <!-- Cards injected by JS for seamless loop -->
-      </div>
+      <div class="reviews-track" id="reviewsTrack"></div>
     </div>
   </section>
 
@@ -1659,23 +1723,33 @@ section{padding:120px 0;position:relative}
             <form id="contactForm" novalidate>
               <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label" for="f-name">Name</label>
-                  <input class="form-input" type="text" id="f-name" name="name" placeholder="Your full name" required>
+                  <label class="form-label" for="name">Name</label>
+                  <input class="form-input" type="text" id="name" name="name" placeholder="Your full name" required>
+                  <div class="error-msg" id="nameError"></div>
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="f-company">Company name <span class="opt">(optional)</span></label>
-                  <input class="form-input" type="text" id="f-company" name="company" placeholder="Your organization">
+                  <label class="form-label" for="company">Company name <span class="opt">(optional)</span></label>
+                  <input class="form-input" type="text" id="company" name="company" placeholder="Your organization">
+                  <div class="error-msg" id="companyError"></div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="email">Email ID</label>
+                  <input class="form-input" type="email" id="email" name="email" placeholder="you@company.com" required>
+                  <div class="error-msg" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="phone">Phone number</label>
+                  <input class="form-input" type="tel" id="phone" name="phone" placeholder="10-digit mobile number" required>
+                  <div class="error-msg" id="phoneError"></div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="f-email">Email ID</label>
-                <input class="form-input" type="email" id="f-email" name="email" placeholder="you@company.com" required>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="f-service">Services category</label>
-                <select class="form-select" id="f-service" name="service" required>
+                <label class="form-label" for="service">Services category</label>
+                <select class="form-select" id="service" name="service" required>
                   <option value="">Select a service</option>
                   <option value="brand">Brand Strategy & Identity</option>
                   <option value="creative">Creative Design & Visuals</option>
@@ -1687,20 +1761,25 @@ section{padding:120px 0;position:relative}
                   <option value="ai">AI-Powered Marketing</option>
                   <option value="other">Something else</option>
                 </select>
+                <div class="error-msg" id="serviceError"></div>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="f-msg">Project description</label>
-                <textarea class="form-textarea" id="f-msg" name="message" placeholder="Tell us about your goals, timeline, and anything else we should know…" required></textarea>
+                <label class="form-label" for="message">Project description</label>
+                <textarea class="form-textarea" id="message" name="message" placeholder="Tell us about your goals, timeline, and anything else we should know…" required></textarea>
+                <div class="error-msg" id="messageError"></div>
               </div>
 
-              <button type="submit" class="form-submit">
-                Send enquiry
+              <button type="submit" class="form-submit" id="formSubmitBtn">
+                <span id="formSubmitText">Send enquiry</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
               </button>
 
               <div class="form-success" id="formSuccess">
                 ✓ Thanks — we've received your enquiry. We'll be in touch within one business day.
+              </div>
+              <div class="form-error-banner" id="formErrorBanner">
+                ⚠ Could not reach the server. Please check your connection or email us directly at <a href="mailto:contact@uway.in" style="color:inherit;text-decoration:underline">contact@uway.in</a>.
               </div>
             </form>
           </div>
@@ -1789,6 +1868,15 @@ section{padding:120px 0;position:relative}
 </footer>
 
 <script>
+/* =========================================================
+   CONFIGURATION — Update both values below
+   APPS_SCRIPT_URL: Deploy → Manage deployments → Edit →
+     "New version" → Who has access: "Anyone" → Deploy → Copy /exec URL
+   SECRET_KEY: Must match const SECRET_KEY in your Apps Script Code.gs
+   ========================================================= */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUO8K8WIBhLWhldcFWgbcaLhh0HTI3-97MoIftarxoqSXM5WjxSJ6nG4V3tjMd2Jdn/exec";
+const SECRET_KEY = "MY_SECRET_KEY_123";
+
 // PAGE ROUTING
 const pages = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('[data-page]');
@@ -1837,8 +1925,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // HEADER SCROLL
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
-  if(window.scrollY > 30) header.classList.add('scrolled');
-  else header.classList.remove('scrolled');
+  header.classList.toggle('scrolled', window.scrollY > 30);
 }, {passive:true});
 
 // MOBILE MENU
@@ -1847,6 +1934,13 @@ const mobileMenu = document.getElementById('mobileMenu');
 menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('open');
   mobileMenu.classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  if(mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)){
+    mobileMenu.classList.remove('open');
+    menuToggle.classList.remove('open');
+  }
 });
 
 // SERVICE CARD CURSOR GLOW
@@ -1879,36 +1973,21 @@ function makeLogo(b){
 }
 track.innerHTML = brands.map(makeLogo).join('') + brands.map(makeLogo).join('');
 
-// REVIEWS — auto-scrolling left to right (visually right-to-left motion)
-// Note: cards visually move right-to-left so new reviews enter from the right
+// REVIEWS
 const reviews = [
   {init:'AR', name:'Aarav Reddy', role:'Founder & CEO', co:'NORTHWAVE', text:'UWAY rebuilt our brand from the ground up. The strategy, the visuals, the launch campaign — every detail felt intentional. Within three months our pipeline doubled.'},
-  {init:'SK', name:'Sara Kannan', role:'Head of Marketing', co:'LUMEN.IO', text:'The way they integrated AI into our content workflow was eye-opening. We\u2019re producing four times the volume with sharper insights and far better targeting.'},
-  {init:'MJ', name:'Marcus Johnson', role:'VP Growth', co:'ATLAS&CO', text:'Their performance team treats every rupee like it\u2019s their own. ROAS climbed 3.2x in the first quarter and they kept finding new levers to pull. Genuinely strategic partners.'},
+  {init:'SK', name:'Sara Kannan', role:'Head of Marketing', co:'LUMEN.IO', text:'The way they integrated AI into our content workflow was eye-opening. We\'re producing four times the volume with sharper insights and far better targeting.'},
+  {init:'MJ', name:'Marcus Johnson', role:'VP Growth', co:'ATLAS&CO', text:'Their performance team treats every rupee like it\'s their own. ROAS climbed 3.2x in the first quarter and they kept finding new levers to pull. Genuinely strategic partners.'},
   {init:'PD', name:'Priya Desai', role:'Brand Director', co:'VERTEX', text:'A new website, a refreshed identity, and a content engine — all delivered with rare design taste. UWAY raised our entire visual standard.'},
   {init:'LT', name:'Lim Tian', role:'Co-Founder', co:'KAIA LABS', text:'We came in needing a landing page. We left with a positioning framework, a content system, and a confident voice. They get business, not just design.'},
-  {init:'FZ', name:'Fatima Zayed', role:'Marketing Lead', co:'ORYX&PALM', text:'Fast, sharp, and very thoughtful. The campaign they built for our Dubai launch outperformed every benchmark we\u2019d seen from past agencies.'},
+  {init:'FZ', name:'Fatima Zayed', role:'Marketing Lead', co:'ORYX&PALM', text:'Fast, sharp, and very thoughtful. The campaign they built for our Dubai launch outperformed every benchmark we\'d seen from past agencies.'},
 ];
 const star = '<svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>';
 function makeReviewCard(r){
-  return `
-    <article class="review-card">
-      <div class="quote-mark">"</div>
-      <div class="review-stars">${star.repeat(5)}</div>
-      <p class="review-text">${r.text}</p>
-      <div class="review-person">
-        <div class="review-img">${r.init}</div>
-        <div class="review-meta">
-          <span class="review-name">${r.name}</span>
-          <span class="review-role">${r.role}</span>
-        </div>
-        <span class="review-co">${r.co}</span>
-      </div>
-    </article>`;
+  return `<article class="review-card"><div class="quote-mark">"</div><div class="review-stars">${star.repeat(5)}</div><p class="review-text">${r.text}</p><div class="review-person"><div class="review-img">${r.init}</div><div class="review-meta"><span class="review-name">${r.name}</span><span class="review-role">${r.role}</span></div><span class="review-co">${r.co}</span></div></article>`;
 }
 const reviewsTrack = document.getElementById('reviewsTrack');
 if(reviewsTrack){
-  // Duplicate the reviews so the loop is seamless
   reviewsTrack.innerHTML = reviews.map(makeReviewCard).join('') + reviews.map(makeReviewCard).join('');
 }
 
@@ -1954,9 +2033,7 @@ if(mapG){
   for(let y=0;y<map.length;y++){
     for(let x=0;x<W;x++){
       if(map[y][x] === '1'){
-        const cx = x * 10 + 5;
-        const cy = y * 14 + 20;
-        circles += `<circle cx="${cx}" cy="${cy}" r="1.6"/>`;
+        circles += `<circle cx="${x*10+5}" cy="${y*14+20}" r="1.6"/>`;
       }
     }
   }
@@ -1972,17 +2049,173 @@ document.querySelectorAll('.section-head, .service-card, .why-item, .info-card, 
   io.observe(el);
 });
 
-// CONTACT FORM
-const form = document.getElementById('contactForm');
-if(form){
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const success = document.getElementById('formSuccess');
-    success.classList.add('show');
-    form.reset();
-    setTimeout(() => { success.classList.remove('show'); }, 5000);
+/* ===========================================================
+   CONTACT FORM — FIXED & PRODUCTION-READY
+   - Sends JSON body as text/plain (required for no-cors Apps Script)
+   - Validates all fields before submission
+   - Handles opaque no-cors response correctly (fetch success = delivered)
+   - Secret key sent in payload for Apps Script verification
+   =========================================================== */
+(function initContactForm(){
+  const form = document.getElementById('contactForm');
+  if(!form) return;
+
+  const successBox  = document.getElementById('formSuccess');
+  const errorBanner = document.getElementById('formErrorBanner');
+  const submitBtn   = document.getElementById('formSubmitBtn');
+  const submitText  = document.getElementById('formSubmitText');
+
+  const fields = {
+    name:    { el: document.getElementById('name'),    err: document.getElementById('nameError'),    required: true },
+    company: { el: document.getElementById('company'), err: document.getElementById('companyError'), required: false },
+    email:   { el: document.getElementById('email'),   err: document.getElementById('emailError'),   required: true },
+    phone:   { el: document.getElementById('phone'),   err: document.getElementById('phoneError'),   required: true },
+    service: { el: document.getElementById('service'), err: document.getElementById('serviceError'), required: true },
+    message: { el: document.getElementById('message'), err: document.getElementById('messageError'), required: true },
+  };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[6-9]\d{9}$/;
+
+  function setError(key, msg){
+    const f = fields[key];
+    if(!f || !f.el) return;
+    f.el.classList.add('error');
+    f.el.classList.remove('success');
+    if(f.err){ f.err.textContent = msg; f.err.classList.add('show'); }
+  }
+  function setSuccess(key){
+    const f = fields[key];
+    if(!f || !f.el) return;
+    f.el.classList.remove('error');
+    f.el.classList.add('success');
+    if(f.err){ f.err.textContent = ''; f.err.classList.remove('show'); }
+  }
+  function clearState(key){
+    const f = fields[key];
+    if(!f || !f.el) return;
+    f.el.classList.remove('error','success');
+    if(f.err){ f.err.textContent = ''; f.err.classList.remove('show'); }
+  }
+
+  function validate(showErrors){
+    let ok = true;
+    const v = {};
+    for(const k in fields){ v[k] = (fields[k].el?.value || '').trim(); }
+
+    // Name
+    if(!v.name){ if(showErrors) setError('name','Name is required'); ok = false; }
+    else setSuccess('name');
+
+    // Company — always optional, always clear
+    clearState('company');
+
+    // Email
+    if(!v.email){ if(showErrors) setError('email','Email is required'); ok = false; }
+    else if(!emailRegex.test(v.email)){ if(showErrors) setError('email','Enter a valid email address'); ok = false; }
+    else setSuccess('email');
+
+    // Phone — 10-digit Indian mobile
+    if(!v.phone){ if(showErrors) setError('phone','Phone number is required'); ok = false; }
+    else if(!phoneRegex.test(v.phone)){ if(showErrors) setError('phone','Enter a valid 10-digit Indian mobile number'); ok = false; }
+    else setSuccess('phone');
+
+    // Service
+    if(!v.service){ if(showErrors) setError('service','Please select a service'); ok = false; }
+    else setSuccess('service');
+
+    // Message
+    if(!v.message){ if(showErrors) setError('message','Message is required'); ok = false; }
+    else if(v.message.length < 10){ if(showErrors) setError('message','Message must be at least 10 characters'); ok = false; }
+    else setSuccess('message');
+
+    return ok;
+  }
+
+  // Live re-validation once user has attempted submit or field already has error
+  Object.keys(fields).forEach(key => {
+    const f = fields[key];
+    if(!f.el) return;
+    f.el.addEventListener('input', () => {
+      if(f.el.classList.contains('error') || form.dataset.submitted === '1') validate(true);
+    });
+    f.el.addEventListener('blur', () => {
+      if(form.dataset.submitted === '1') validate(true);
+    });
   });
-}
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    form.dataset.submitted = '1';
+
+    successBox.classList.remove('show');
+    errorBanner.classList.remove('show');
+
+    if(!validate(true)) return;
+
+    // Build payload — field names must match Apps Script doPost()
+    const now = new Date();
+    const submittedAt = now.toLocaleString('en-IN', {
+      timeZone:  'Asia/Kolkata',
+      day:       '2-digit',
+      month:     'short',
+      year:      'numeric',
+      hour:      '2-digit',
+      minute:    '2-digit',
+      second:    '2-digit',
+      hour12:    true
+    });
+
+    const payload = {
+      secret:      SECRET_KEY,
+      name:        fields.name.el.value.trim(),
+      company:     fields.company.el.value.trim(),
+      email:       fields.email.el.value.trim(),
+      phone:       fields.phone.el.value.trim(),
+      service:     fields.service.el.value.trim(),
+      message:     fields.message.el.value.trim(),
+      submittedAt: submittedAt,
+      page:        window.location.href
+    };
+
+    submitBtn.disabled = true;
+    submitText.textContent = 'Sending…';
+
+    try {
+      /*
+       * WHY no-cors + text/plain:
+       * Google Apps Script /exec endpoints don't send CORS headers on the
+       * OPTIONS pre-flight, so the browser blocks any "non-simple" request.
+       * Sending Content-Type: text/plain keeps it a "simple" request that
+       * bypasses the pre-flight — Apps Script receives the body fine.
+       * The trade-off: the response is "opaque" (status 0, unreadable body).
+       * We treat a resolved fetch (no network error thrown) as success.
+       */
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body:    JSON.stringify(payload)
+      });
+
+      // fetch resolved without throwing → request reached Google's servers
+      successBox.classList.add('show');
+      form.reset();
+      Object.keys(fields).forEach(clearState);
+      form.dataset.submitted = '0';
+      setTimeout(() => successBox.classList.remove('show'), 3000);
+
+    } catch(err){
+      // Only fires on actual network failure (offline, DNS error, etc.)
+      console.error('Form submit error:', err);
+      errorBanner.textContent = '⚠ Could not reach the server. Please check your connection or email us directly at contact@uway.in';
+      errorBanner.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      submitText.textContent = 'Send enquiry';
+    }
+  });
+})();
 
 // SHOW SWIPE HINT ON MOBILE
 if(window.innerWidth <= 640){
