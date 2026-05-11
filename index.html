@@ -3,7 +3,8 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 <title>UWAY — Creative Digital Marketing Company</title>
 <meta name="description" content="UWAY is an intelligent creative agency building future-ready brands through creativity, strategy, and AI." />
 
@@ -51,7 +52,7 @@ body{
   overflow-x:hidden;
   font-feature-settings:"ss01","cv11";
 }
-img,svg{display:block;max-width:100%}
+img,svg{display:block;max-width:100%;user-select: none;}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,textarea,select{font-family:inherit}
@@ -387,7 +388,7 @@ section{padding:120px 0;position:relative}
 @media (max-width:760px){section{padding:80px 0}}
 
 .section-head{
-  margin-bottom:64px;
+  margin-bottom:45px;
   display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
 }
 .section-head .left{max-width:680px}
@@ -600,7 +601,7 @@ section{padding:120px 0;position:relative}
     overflow-x:auto;
     scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch;
-    padding:0 20px 20px;
+    padding:20px 20px 20px;
     margin:0 -20px;
     scrollbar-width:none;
   }
@@ -1002,14 +1003,97 @@ section{padding:120px 0;position:relative}
   background:rgba(59,110,245,0.04);
 }
 .form-textarea{resize:vertical;min-height:120px;font-family:inherit}
-.form-select{
-  appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8d96' stroke-width='2.5'><polyline points='6 9 12 15 18 9'/></svg>");
-  background-repeat:no-repeat;
-  background-position:right 16px center;
-  padding-right:42px;
+/* ── Custom Select Dropdown ── */
+.custom-select-wrap{
+  position:relative;
 }
-.form-select option{background:var(--bg-2);color:var(--white)}
+.custom-select-trigger{
+  width:100%;
+  padding:14px 42px 14px 16px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:var(--grey-2);
+  font-size:14.5px;
+  letter-spacing:-.005em;
+  cursor:pointer;
+  user-select:none;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:border-color .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+  outline:none;
+  position:relative;
+}
+.custom-select-trigger.has-value{ color:var(--white); }
+.custom-select-trigger:focus,
+.custom-select-trigger.open{
+  border-color:var(--blue);
+  background:rgba(59,110,245,0.04);
+}
+.custom-select-trigger.error{
+  border-color:#ef4444 !important;
+  background:rgba(239,68,68,0.05) !important;
+}
+.custom-select-trigger.success{
+  border-color:#2ea843 !important;
+  background:rgba(46,168,67,0.04) !important;
+}
+.custom-select-arrow{
+  width:16px;height:16px;flex-shrink:0;
+  color:var(--grey);
+  transition:transform .25s var(--ease), color .25s var(--ease);
+  pointer-events:none;
+}
+.custom-select-trigger.open .custom-select-arrow{
+  transform:rotate(180deg);
+  color:var(--blue-2);
+}
+
+.custom-select-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:#18181f;
+  border:1px solid var(--line-2);
+  border-radius:14px;
+  overflow:hidden;
+  z-index:50;
+  box-shadow:0 16px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04);
+  opacity:0;
+  transform:translateY(-6px) scale(0.98);
+  pointer-events:none;
+  transition:opacity .2s var(--ease-out), transform .2s var(--ease-out);
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.custom-select-dropdown.open{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+.custom-select-option{
+  padding:12px 16px;
+  font-size:14px;
+  color:var(--ink-2);
+  cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  transition:background .15s, color .15s;
+  letter-spacing:-.005em;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.custom-select-option:last-child{border-bottom:none}
+.custom-select-option:hover{
+  background:rgba(59,110,245,0.12);
+  color:var(--white);
+}
+.custom-select-option.selected{
+  background:rgba(59,110,245,0.15);
+  color:var(--blue-2);
+  font-weight:500;
+}
+
+/* Hidden real select for form submission */
+.custom-select-hidden{
+  position:absolute;opacity:0;pointer-events:none;width:0;height:0;
+}
 
 .form-submit{
   display:inline-flex;align-items:center;gap:10px;
@@ -1285,9 +1369,9 @@ section{padding:120px 0;position:relative}
       </div>
 
       <h1 class="hero-title">
-        <span class="word">DIGITAL</span><br>
-        <span class="word">GROWTH</span> <span class="word italic">WITHOUT</span><br>
-        <span class="word">BORDER</span>
+        <span class="word">CREATIVE</span><br>
+        <span class="word">DIGITAL</span> <span class="word italic">MARKETING</span><br>
+        <span class="word">COMPANY</span>
       </h1>
 
       <p class="hero-sub">
@@ -1464,48 +1548,88 @@ section{padding:120px 0;position:relative}
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 4.5 3.4 8.4 8 9 4.6-.6 8-4.5 8-9V7l-8-5z"/><path d="M9 12l2 2 4-4"/></svg></div>
           <h3 class="svc-title">Brand Strategy & Identity</h3>
           <p class="svc-desc">Strategic positioning and identity systems that build long-term market authority.</p>
+          <ul class="svc-list">
+            <li>Digital Branding & Rebranding</li>
+            <li>Visual Identity Systems</li>
+            <li>Brand Guidelines</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">02</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 22a10 10 0 1 1 10-10c0 3-2 4-4 4h-2a2 2 0 0 0-2 2 3 3 0 0 1-2 4z"/></svg></div>
           <h3 class="svc-title">Creative Design</h3>
           <p class="svc-desc">Campaigns, social systems, and motion graphics that look distinctive and perform.</p>
+          <ul class="svc-list">
+            <li>Campaign Design</li>
+            <li>Social Visual Systems</li>
+            <li>Motion Graphics</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">03</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="9" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.5 7.5l7-1.5M8.5 10.5l7 6"/></svg></div>
           <h3 class="svc-title">Social Media & Growth</h3>
           <p class="svc-desc">B2B & B2C strategy, content systems, and AI-driven insights for every platform.</p>
+          <ul class="svc-list">
+            <li>Social Media Strategy</li>
+            <li>Content Planning</li>
+            <li>AI Audience Insights</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">04</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 6-7"/><path d="M14 6h6v6"/></svg></div>
           <h3 class="svc-title">Performance Marketing</h3>
           <p class="svc-desc">ROI-focused media execution across Meta, Google, and beyond.</p>
+           <ul class="svc-list">
+            <li>Paid Advertising</li>
+            <li>Meta & Google Ads</li>
+            <li>Lead Generation</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">05</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 10h20M6 7h.01M9 7h.01"/><path d="M8 22h8M12 18v4"/></svg></div>
           <h3 class="svc-title">Web Development & UX</h3>
           <p class="svc-desc">Corporate sites and e-commerce platforms engineered for speed and elegance.</p>
+          <ul class="svc-list">
+            <li>Corporate Websites</li>
+            <li>UI/UX Design</li>
+            <li>E-Commerce</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">06</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 13h6M9 17h6M9 9h2"/></svg></div>
           <h3 class="svc-title">Content & Copywriting</h3>
           <p class="svc-desc">Storytelling, sales copy, and SEO-led content that builds authority.</p>
+          <ul class="svc-list">
+            <li>Brand Storytelling</li>
+            <li>SEO Content</li>
+            <li>Email Campaigns</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">07</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/><path d="M8 11h6M11 8v6"/></svg></div>
           <h3 class="svc-title">Search Engine Optimization</h3>
           <p class="svc-desc">Technical SEO and semantic research for compounding organic traffic.</p>
+           <ul class="svc-list">
+            <li>Technical SEO</li>
+            <li>Keyword Research</li>
+            <li>International SEO</li>
+          </ul>
         </article>
         <article class="service-card" data-card>
           <span class="svc-num">08</span>
           <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="10" r="1.2"/><circle cx="15" cy="10" r="1.2"/><path d="M9 15c.8 1 2 1.5 3 1.5s2.2-.5 3-1.5"/><path d="M2 10v4M22 10v4M10 2h4M10 22h4"/></svg></div>
           <h3 class="svc-title">AI-Powered Marketing</h3>
           <p class="svc-desc">Marketing automation, intelligent analysis, and predictive insights.</p>
+          <ul class="svc-list">
+            <li>AI Creative Workflows</li>
+            <li>Marketing Automation</li>
+            <li>Predictive Insights</li>
+          </ul>
         </article>
       </div>
       <div class="swipe-hint" style="display:none">
@@ -1589,7 +1713,7 @@ section{padding:120px 0;position:relative}
       <div class="section-head">
         <div class="left">
           <div class="eyebrow">Global presence</div>
-          <h2 class="section-title">Building from Bengaluru. <span class="accent">Serving the world.</span></h2>
+          <h2 class="section-title">Digital Growth<span class="accent">Without Borders</span></h2>
           <p class="section-sub">From India to the UK, Singapore, Malaysia, Thailand, and Dubai — UWAY builds for ambitious brands across regions.</p>
         </div>
       </div>
@@ -1750,18 +1874,35 @@ section{padding:120px 0;position:relative}
 
               <div class="form-group">
                 <label class="form-label" for="service">Services category</label>
-                <select class="form-select" id="service" name="service" required>
-                  <option value="">Select a service</option>
-                  <option value="brand">Brand Strategy & Identity</option>
-                  <option value="creative">Creative Design & Visuals</option>
-                  <option value="social">Social Media & Growth</option>
-                  <option value="performance">Performance Marketing</option>
-                  <option value="web">Web Development & UX</option>
-                  <option value="content">Content & Copywriting</option>
-                  <option value="seo">Search Engine Optimization</option>
-                  <option value="ai">AI-Powered Marketing</option>
-                  <option value="other">Something else</option>
-                </select>
+                <div class="custom-select-wrap" id="customServiceWrap">
+                  <select class="custom-select-hidden" id="service" name="service" required tabindex="-1">
+                    <option value="">Select a service</option>
+                    <option value="brand">Brand Strategy &amp; Identity</option>
+                    <option value="creative">Creative Design &amp; Visuals</option>
+                    <option value="social">Social Media &amp; Growth</option>
+                    <option value="performance">Performance Marketing</option>
+                    <option value="web">Web Development &amp; UX</option>
+                    <option value="content">Content &amp; Copywriting</option>
+                    <option value="seo">Search Engine Optimization</option>
+                    <option value="ai">AI-Powered Marketing</option>
+                    <option value="other">Something else</option>
+                  </select>
+                  <div class="custom-select-trigger" id="serviceTrigger" tabindex="0" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                    <span id="serviceTriggerText">Select a service</span>
+                    <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="custom-select-dropdown" id="serviceDropdown" role="listbox">
+                    <div class="custom-select-option" data-value="brand" role="option">Brand Strategy &amp; Identity</div>
+                    <div class="custom-select-option" data-value="creative" role="option">Creative Design &amp; Visuals</div>
+                    <div class="custom-select-option" data-value="social" role="option">Social Media &amp; Growth</div>
+                    <div class="custom-select-option" data-value="performance" role="option">Performance Marketing</div>
+                    <div class="custom-select-option" data-value="web" role="option">Web Development &amp; UX</div>
+                    <div class="custom-select-option" data-value="content" role="option">Content &amp; Copywriting</div>
+                    <div class="custom-select-option" data-value="seo" role="option">Search Engine Optimization</div>
+                    <div class="custom-select-option" data-value="ai" role="option">AI-Powered Marketing</div>
+                    <div class="custom-select-option" data-value="other" role="option">Something else</div>
+                  </div>
+                </div>
                 <div class="error-msg" id="serviceError"></div>
               </div>
 
@@ -1867,6 +2008,476 @@ section{padding:120px 0;position:relative}
     </div>
   </div>
 </footer>
+
+<!-- <script>
+/* =========================================================
+   CONFIGURATION — Update both values below
+   APPS_SCRIPT_URL: Deploy → Manage deployments → Edit →
+     "New version" → Who has access: "Anyone" → Deploy → Copy /exec URL
+   SECRET_KEY: Must match const SECRET_KEY in your Apps Script Code.gs
+   ========================================================= */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYYiI0aA14TMcrzR_QtJB4eT4sKFGtzcWHD_urltXEZXGPPTKrt0QYV80t-7sVQw66/exec";
+   
+const SECRET_KEY = "MY_SECRET_KEY_123";
+
+// PAGE ROUTING
+const pages = document.querySelectorAll('.page');
+const navLinks = document.querySelectorAll('[data-page]');
+
+function showPage(pageId, scroll = true){
+  pages.forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + pageId);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(l => l.classList.add('active'));
+  if(scroll) window.scrollTo({top:0,behavior:'instant'});
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('menuToggle').classList.remove('open');
+  history.replaceState(null,'','#'+pageId);
+}
+
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    const page = link.getAttribute('data-page');
+    if(page){ e.preventDefault(); showPage(page); }
+  });
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#','');
+  if(['home','about','contact'].includes(hash)) showPage(hash, false);
+  document.querySelectorAll('a[href^="#"]:not([data-page])').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if(el){
+        e.preventDefault();
+        if(!document.getElementById('page-home').classList.contains('active')){
+          showPage('home', false);
+        }
+        setTimeout(() => {
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+          document.getElementById('mobileMenu').classList.remove('open');
+          document.getElementById('menuToggle').classList.remove('open');
+        }, 50);
+      }
+    });
+  });
+});
+
+// HEADER SCROLL
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 30);
+}, {passive:true});
+
+// MOBILE MENU
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  if(mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)){
+    mobileMenu.classList.remove('open');
+    menuToggle.classList.remove('open');
+  }
+});
+
+// SERVICE CARD CURSOR GLOW
+document.querySelectorAll('[data-card]').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mx', x + '%');
+    card.style.setProperty('--my', y + '%');
+  });
+});
+
+// MARQUEE LOGOS
+const brands = [
+  {name:'NORTHWAVE', icon:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18"/>'},
+  {name:'LUMEN.IO', icon:'<path d="M5 12c0-3.866 3.134-7 7-7s7 3.134 7 7H5z"/><path d="M12 12v9"/>'},
+  {name:'ATLAS&CO', icon:'<polygon points="12,3 21,9 21,15 12,21 3,15 3,9"/>'},
+  {name:'VERTEX', icon:'<polygon points="12,3 22,21 2,21"/>'},
+  {name:'KAIA LABS', icon:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/>'},
+  {name:'ORYX&PALM', icon:'<path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="4"/>'},
+  {name:'NIMBUS', icon:'<path d="M6 16a4 4 0 1 1 1-7.9 5 5 0 0 1 9.7-.6A4 4 0 0 1 18 16H6z"/>'},
+  {name:'HELIOS', icon:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>'},
+  {name:'KORDA', icon:'<path d="M3 12c4-8 14-8 18 0-4 8-14 8-18 0z"/><circle cx="12" cy="12" r="2"/>'},
+  {name:'SAVANNA', icon:'<path d="M3 18h18M5 18V8l3-2 3 2v10M14 18V11l3-2 3 2v7"/>'},
+];
+const track = document.getElementById('marqueeTrack');
+function makeLogo(b){
+  return `<div class="marquee-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${b.icon}</svg><span>${b.name}</span></div>`;
+}
+track.innerHTML = brands.map(makeLogo).join('') + brands.map(makeLogo).join('');
+
+// REVIEWS
+const reviews = [
+  {init:'AR', name:'Aarav Reddy', role:'Founder & CEO', co:'NORTHWAVE', text:'UWAY rebuilt our brand from the ground up. The strategy, the visuals, the launch campaign — every detail felt intentional. Within three months our pipeline doubled.'},
+  {init:'SK', name:'Sara Kannan', role:'Head of Marketing', co:'LUMEN.IO', text:'The way they integrated AI into our content workflow was eye-opening. We\'re producing four times the volume with sharper insights and far better targeting.'},
+  {init:'MJ', name:'Marcus Johnson', role:'VP Growth', co:'ATLAS&CO', text:'Their performance team treats every rupee like it\'s their own. ROAS climbed 3.2x in the first quarter and they kept finding new levers to pull. Genuinely strategic partners.'},
+  {init:'PD', name:'Priya Desai', role:'Brand Director', co:'VERTEX', text:'A new website, a refreshed identity, and a content engine — all delivered with rare design taste. UWAY raised our entire visual standard.'},
+  {init:'LT', name:'Lim Tian', role:'Co-Founder', co:'KAIA LABS', text:'We came in needing a landing page. We left with a positioning framework, a content system, and a confident voice. They get business, not just design.'},
+  {init:'FZ', name:'Fatima Zayed', role:'Marketing Lead', co:'ORYX&PALM', text:'Fast, sharp, and very thoughtful. The campaign they built for our Dubai launch outperformed every benchmark we\'d seen from past agencies.'},
+];
+const star = '<svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>';
+function makeReviewCard(r){
+  return `<article class="review-card"><div class="quote-mark">"</div><div class="review-stars">${star.repeat(5)}</div><p class="review-text">${r.text}</p><div class="review-person"><div class="review-img">${r.init}</div><div class="review-meta"><span class="review-name">${r.name}</span><span class="review-role">${r.role}</span></div><span class="review-co">${r.co}</span></div></article>`;
+}
+const reviewsTrack = document.getElementById('reviewsTrack');
+if(reviewsTrack){
+  reviewsTrack.innerHTML = reviews.map(makeReviewCard).join('') + reviews.map(makeReviewCard).join('');
+}
+
+// WORLD MAP DOTS
+const mapG = document.getElementById('mapDots');
+if(mapG){
+  const W = 100;
+  const map = [
+    "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "0000111111000000111110000111111111110000000000000000000000000000111111110000000000000000000000000000",
+    "0001111111100011111111111111111111111100000000000000000000001111111111111000000000000000000000000000",
+    "0011111111111111111111111111111111111110000000000000000111111111111111111100000000000000000000000000",
+    "0011111111111111111111111111111111111111100000000000111111111111111111111110000000000000000000000000",
+    "0001111111111111111111111111111111111111110000000111111111111111111111111111000000000000000000000000",
+    "0000111111111111111111111110011111111111110000111111111111111111111111111111100000000000000000000000",
+    "0000011111111111111100011000000111111111100011111111111111111111111111111111110000000000000000000000",
+    "0000001111111111000000000000000111111111000111111111111111111111111111111111111000000000000000000000",
+    "0000000111111100000000000000000011111110001111111111111111111111111111111111111100000000000000000000",
+    "0000000011110000000000000000000001111100001111111111111111111111111111111111111110000000000000000000",
+    "0000000111100000000000000000000111111100000111111111111111111111111111111111111110000000000000000000",
+    "0000001111110000000000000000011111111110000011111111111111111111111111111111111100000000000000000000",
+    "0000011111111000000000000000111111111111000001111111111111111111111111111111111000000000000000000000",
+    "0000001111111100000000000001111111111111100000111111111111111111111111111111110000000000000000000000",
+    "0000000111111110000000000011111111111111110000011111111111111111111111111111100000000000000000000000",
+    "0000000011111110000000000111111111111111111000001111111111111111111111111111000000000000000000000000",
+    "0000000001111110000000000011111111111111110000000111111111111111111111111110000000000000000000000000",
+    "0000000000111110000000000001111111111111100000000011111111111111111111111100000000000000000000000000",
+    "0000000000011110000000000000111111111111000000000001111111111111111111111000000000000000000000000000",
+    "0000000000001110000000000000011111111110000000000000111111111111111111100000000000000000000000000000",
+    "0000000000000111000000000000001111111100000000000000011111111111111111000000000000000000000000000000",
+    "0000000000000011100000000000000111111000000000000000001111111111111110000000000000000000000000000000",
+    "0000000000000001110000000000000011110000000000000000000111111111111100000000000000000000000000000000",
+    "0000000000000000110000000000000001100000000000000000000011111111111000000000000000000000000000000000",
+    "0000000000000000011000000000000000000000000000000000000001111111110000000000000000000000000000000000",
+    "0000000000000000001000000000000000000000000000000000000000111111100000000000000000000000000000000000",
+    "0000000000000000000000000000000000000000000000000000000000011111000000000000000000000000000000000000",
+    "0000000000000000000000000000000000000000000000000000000000001110000000000000000000000000000000000000",
+    "0000000000000000000000000000000000000000000000000000000000000110000000000000000000000000000000000000",
+    "0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000",
+    "0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000",
+  ];
+  let circles = '';
+  for(let y=0;y<map.length;y++){
+    for(let x=0;x<W;x++){
+      if(map[y][x] === '1'){
+        circles += `<circle cx="${x*10+5}" cy="${y*14+20}" r="1.6"/>`;
+      }
+    }
+  }
+  mapG.innerHTML = circles;
+}
+
+// REVEAL ON SCROLL
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.12});
+document.querySelectorAll('.section-head, .service-card, .why-item, .info-card, .form-card, .vm-card').forEach(el => {
+  el.classList.add('reveal');
+  io.observe(el);
+});
+
+/* ===========================================================
+   CONTACT FORM — FIXED & PRODUCTION-READY
+   - Sends JSON body as text/plain (required for no-cors Apps Script)
+   - Validates all fields before submission
+   - Handles opaque no-cors response correctly (fetch success = delivered)
+   - Secret key sent in payload for Apps Script verification
+   =========================================================== */
+(function initContactForm(){
+  const form = document.getElementById('contactForm');
+  if(!form) return;
+
+  const successBox  = document.getElementById('formSuccess');
+  const errorBanner = document.getElementById('formErrorBanner');
+  const submitBtn   = document.getElementById('formSubmitBtn');
+  const submitText  = document.getElementById('formSubmitText');
+
+  // ── Custom Select Setup ──
+  const trigger    = document.getElementById('serviceTrigger');
+  const dropdown   = document.getElementById('serviceDropdown');
+  const triggerTxt = document.getElementById('serviceTriggerText');
+  const hiddenSel  = document.getElementById('service');
+
+  function openDropdown(){
+    trigger.classList.add('open');
+    dropdown.classList.add('open');
+    trigger.setAttribute('aria-expanded','true');
+  }
+  function closeDropdown(){
+    trigger.classList.remove('open');
+    dropdown.classList.remove('open');
+    trigger.setAttribute('aria-expanded','false');
+  }
+
+  trigger.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    trigger.classList.contains('open') ? closeDropdown() : openDropdown();
+  });
+  trigger.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); trigger.classList.contains('open')?closeDropdown():openDropdown(); }
+    if(e.key==='Escape') closeDropdown();
+  });
+  document.addEventListener('click',()=>closeDropdown());
+  dropdown.addEventListener('click',(e)=>{
+    const opt = e.target.closest('.custom-select-option');
+    if(!opt) return;
+    const val = opt.dataset.value;
+    const label = opt.textContent.trim();
+    hiddenSel.value = val;
+    triggerTxt.textContent = label;
+    trigger.classList.add('has-value');
+    dropdown.querySelectorAll('.custom-select-option').forEach(o=>o.classList.remove('selected'));
+    opt.classList.add('selected');
+    closeDropdown();
+    // Remove error state on selection, show success
+    trigger.classList.remove('error');
+    if(val){
+      trigger.classList.add('success');
+      const err = document.getElementById('serviceError');
+      if(err){ err.textContent=''; err.classList.remove('show'); }
+    }
+  });
+
+  const fields = {
+    name:    { el: document.getElementById('name'),    err: document.getElementById('nameError'),    required: true },
+    company: { el: document.getElementById('company'), err: document.getElementById('companyError'), required: false },
+    email:   { el: document.getElementById('email'),   err: document.getElementById('emailError'),   required: true },
+    phone:   { el: document.getElementById('phone'),   err: document.getElementById('phoneError'),   required: true },
+    service: { el: hiddenSel,                          err: document.getElementById('serviceError'), required: true },
+    message: { el: document.getElementById('message'), err: document.getElementById('messageError'), required: true },
+  };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[6-9]\d{9}$/;
+
+  // Get the visual element for a field (trigger for service, el for others)
+  function getVisual(key){
+    return key === 'service' ? trigger : fields[key].el;
+  }
+
+  function setError(key, msg){
+    const f = fields[key]; if(!f||!f.el) return;
+    const vis = getVisual(key);
+    vis.classList.add('error');
+    vis.classList.remove('success');
+    if(f.err){ f.err.textContent=msg; f.err.classList.add('show'); }
+  }
+  function setSuccess(key){
+    const f = fields[key]; if(!f||!f.el) return;
+    const vis = getVisual(key);
+    vis.classList.remove('error');
+    vis.classList.add('success');
+    if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
+  }
+  function clearState(key){
+    const f = fields[key]; if(!f||!f.el) return;
+    const vis = getVisual(key);
+    vis.classList.remove('error','success');
+    if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
+  }
+
+  // Validate a SINGLE field and apply state; returns true if valid
+  function validateField(key, showErrors){
+    const f = fields[key]; if(!f||!f.el) return true;
+    const v = (f.el.value||'').trim();
+
+    if(key==='name'){
+      if(!v){ if(showErrors) setError('name','Name is required'); return false; }
+      setSuccess('name'); return true;
+    }
+    if(key==='company'){ clearState('company'); return true; }
+    if(key==='email'){
+      if(!v){ if(showErrors) setError('email','Email is required'); return false; }
+      if(!emailRegex.test(v)){ if(showErrors) setError('email','Enter a valid email address'); return false; }
+      setSuccess('email'); return true;
+    }
+    if(key==='phone'){
+      if(!v){ if(showErrors) setError('phone','Phone number is required'); return false; }
+      if(!phoneRegex.test(v)){ if(showErrors) setError('phone','Enter a valid 10-digit Indian mobile number'); return false; }
+      setSuccess('phone'); return true;
+    }
+    if(key==='service'){
+      if(!v){ if(showErrors) setError('service','Please select a service'); return false; }
+      setSuccess('service'); return true;
+    }
+    if(key==='message'){
+      if(!v){ if(showErrors) setError('message','Message is required'); return false; }
+      if(v.length<10){ if(showErrors) setError('message','Message must be at least 10 characters'); return false; }
+      setSuccess('message'); return true;
+    }
+    return true;
+  }
+
+  function validate(showErrors){
+    let ok = true;
+    for(const key of Object.keys(fields)){
+      if(!validateField(key, showErrors)) ok = false;
+    }
+    return ok;
+  }
+
+  // Per-field live behaviour:
+  // - If field currently has red: validate on every keystroke (clears red, shows green when valid)
+  // - If submitted once: validate on every keystroke
+  // - Click/focus on red field: immediately clear the red border only (not green yet)
+  Object.keys(fields).forEach(key => {
+    const f = fields[key];
+    if(!f.el || key==='service') return; // service handled by custom dropdown above
+
+    // Click/focus → always clear any color state (red or green) back to neutral
+    f.el.addEventListener('focus', () => {
+      const vis = getVisual(key);
+      vis.classList.remove('error','success');
+      if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
+    });
+
+    f.el.addEventListener('input', () => {
+      const vis = getVisual(key);
+      const wasError = vis.classList.contains('error');
+      const submitted = form.dataset.submitted === '1';
+      if(wasError || submitted){
+        validateField(key, true);
+      }
+    });
+
+    f.el.addEventListener('blur', () => {
+      if(form.dataset.submitted === '1') validateField(key, true);
+    });
+  });
+
+  // Service trigger: clicking always clears any color state back to neutral
+  trigger.addEventListener('mousedown', ()=>{
+    trigger.classList.remove('error','success');
+    const err = document.getElementById('serviceError');
+    if(err){ err.textContent=''; err.classList.remove('show'); }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    form.dataset.submitted = '1';
+
+    successBox.classList.remove('show');
+    errorBanner.classList.remove('show');
+
+    if(!validate(true)) return;
+
+    // Build payload — field names must match Apps Script doPost()
+    const now = new Date();
+    const submittedAt = now.toLocaleString('en-IN', {
+      timeZone:  'Asia/Kolkata',
+      day:       '2-digit',
+      month:     'short',
+      year:      'numeric',
+      hour:      '2-digit',
+      minute:    '2-digit',
+      second:    '2-digit',
+      hour12:    true
+    });
+
+    const payload = {
+      secret:      SECRET_KEY,
+      name:        fields.name.el.value.trim(),
+      company:     fields.company.el.value.trim(),
+      email:       fields.email.el.value.trim(),
+      phone:       fields.phone.el.value.trim(),
+      service:     fields.service.el.value.trim(),
+      message:     fields.message.el.value.trim(),
+      submittedAt: submittedAt,
+      page:        window.location.href
+    };
+
+    submitBtn.disabled = true;
+    submitText.textContent = 'Sending…';
+
+    try {
+      /*
+       * WHY no-cors + text/plain:
+       * Google Apps Script /exec endpoints don't send CORS headers on the
+       * OPTIONS pre-flight, so the browser blocks any "non-simple" request.
+       * Sending Content-Type: text/plain keeps it a "simple" request that
+       * bypasses the pre-flight — Apps Script receives the body fine.
+       * The trade-off: the response is "opaque" (status 0, unreadable body).
+       * We treat a resolved fetch (no network error thrown) as success.
+       */
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body:    JSON.stringify(payload)
+      });
+
+      // fetch resolved without throwing → request reached Google's servers
+      successBox.classList.add('show');
+      form.reset();
+      Object.keys(fields).forEach(clearState);
+      // Reset custom select
+      triggerTxt.textContent = 'Select a service';
+      trigger.classList.remove('has-value','error','success');
+      dropdown.querySelectorAll('.custom-select-option').forEach(o=>o.classList.remove('selected'));
+      form.dataset.submitted = '0';
+      setTimeout(() => successBox.classList.remove('show'), 3000);
+
+    } catch(err){
+      // Only fires on actual network failure (offline, DNS error, etc.)
+      console.error('Form submit error:', err);
+      errorBanner.textContent = '⚠ Could not reach the server. Please check your connection or email us directly at contact@uway.in';
+      errorBanner.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      submitText.textContent = 'Send enquiry';
+    }
+  });
+})();
+
+// SHOW SWIPE HINT ON MOBILE
+if(window.innerWidth <= 640){
+  const hint = document.querySelector('.swipe-hint');
+  if(hint) hint.style.display = 'flex';
+}
+
+// DISABLE ZOOM IN/OUT 
+// Block Ctrl/Cmd + wheel (zoom by scrolling)
+window.addEventListener('wheel', (e) => {
+  if (e.ctrlKey || e.metaKey) e.preventDefault();
+}, { passive: false });
+
+// Block Ctrl/Cmd + (+, -, 0) keys
+window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) &&
+      ['+', '-', '=', '0'].includes(e.key)) {
+    e.preventDefault();
+  }
+});
+
+// DISABLE ZOOM IN/OUT SAFARI/IOS
+document.addEventListener('gesturestart', (e) => e.preventDefault());
+document.addEventListener('gesturechange', (e) => e.preventDefault());
+document.addEventListener('gestureend', (e) => e.preventDefault());
+
+// Prevent double-tap zoom
+let lastTouch = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouch <= 300) e.preventDefault();
+  lastTouch = now;
+}, { passive: false });
+</script> -->
 
 <script>
 /* =========================================================
@@ -2067,83 +2678,168 @@ document.querySelectorAll('.section-head, .service-card, .why-item, .info-card, 
   const submitBtn   = document.getElementById('formSubmitBtn');
   const submitText  = document.getElementById('formSubmitText');
 
+  // ── Custom Select Setup ──
+  const trigger    = document.getElementById('serviceTrigger');
+  const dropdown   = document.getElementById('serviceDropdown');
+  const triggerTxt = document.getElementById('serviceTriggerText');
+  const hiddenSel  = document.getElementById('service');
+
+  function openDropdown(){
+    trigger.classList.add('open');
+    dropdown.classList.add('open');
+    trigger.setAttribute('aria-expanded','true');
+  }
+  function closeDropdown(){
+    trigger.classList.remove('open');
+    dropdown.classList.remove('open');
+    trigger.setAttribute('aria-expanded','false');
+  }
+
+  trigger.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    trigger.classList.contains('open') ? closeDropdown() : openDropdown();
+  });
+  trigger.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); trigger.classList.contains('open')?closeDropdown():openDropdown(); }
+    if(e.key==='Escape') closeDropdown();
+  });
+  document.addEventListener('click',()=>closeDropdown());
+  dropdown.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    const opt = e.target.closest('.custom-select-option');
+    if(!opt) return;
+    const val = opt.dataset.value;
+    const label = opt.textContent.trim();
+    hiddenSel.value = val;
+    triggerTxt.textContent = label;
+    trigger.classList.add('has-value');
+    dropdown.querySelectorAll('.custom-select-option').forEach(o=>o.classList.remove('selected'));
+    opt.classList.add('selected');
+    closeDropdown();
+    // Remove error state on selection, show success
+    trigger.classList.remove('error');
+    if(val){
+      trigger.classList.add('success');
+      const err = document.getElementById('serviceError');
+      if(err){ err.textContent=''; err.classList.remove('show'); }
+    }
+  });
+
   const fields = {
     name:    { el: document.getElementById('name'),    err: document.getElementById('nameError'),    required: true },
     company: { el: document.getElementById('company'), err: document.getElementById('companyError'), required: false },
     email:   { el: document.getElementById('email'),   err: document.getElementById('emailError'),   required: true },
     phone:   { el: document.getElementById('phone'),   err: document.getElementById('phoneError'),   required: true },
-    service: { el: document.getElementById('service'), err: document.getElementById('serviceError'), required: true },
+    service: { el: hiddenSel,                          err: document.getElementById('serviceError'), required: true },
     message: { el: document.getElementById('message'), err: document.getElementById('messageError'), required: true },
   };
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[6-9]\d{9}$/;
 
+  // Get the visual element for a field (trigger for service, el for others)
+  function getVisual(key){
+    return key === 'service' ? trigger : fields[key].el;
+  }
+
   function setError(key, msg){
-    const f = fields[key];
-    if(!f || !f.el) return;
-    f.el.classList.add('error');
-    f.el.classList.remove('success');
-    if(f.err){ f.err.textContent = msg; f.err.classList.add('show'); }
+    const f = fields[key]; if(!f||!f.el) return;
+    const vis = getVisual(key);
+    vis.classList.add('error');
+    vis.classList.remove('success');
+    if(f.err){ f.err.textContent=msg; f.err.classList.add('show'); }
   }
   function setSuccess(key){
-    const f = fields[key];
-    if(!f || !f.el) return;
-    f.el.classList.remove('error');
-    f.el.classList.add('success');
-    if(f.err){ f.err.textContent = ''; f.err.classList.remove('show'); }
+    const f = fields[key]; if(!f||!f.el) return;
+    const vis = getVisual(key);
+    vis.classList.remove('error');
+    vis.classList.add('success');
+    if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
   }
   function clearState(key){
-    const f = fields[key];
-    if(!f || !f.el) return;
-    f.el.classList.remove('error','success');
-    if(f.err){ f.err.textContent = ''; f.err.classList.remove('show'); }
+    const f = fields[key]; if(!f||!f.el) return;
+    const vis = getVisual(key);
+    vis.classList.remove('error','success');
+    if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
+  }
+
+  // Validate a SINGLE field and apply state; returns true if valid
+  function validateField(key, showErrors){
+    const f = fields[key]; if(!f||!f.el) return true;
+    const v = (f.el.value||'').trim();
+
+    if(key==='name'){
+      if(!v){ if(showErrors) setError('name','Name is required'); return false; }
+      setSuccess('name'); return true;
+    }
+    if(key==='company'){ clearState('company'); return true; }
+    if(key==='email'){
+      if(!v){ if(showErrors) setError('email','Email is required'); return false; }
+      if(!emailRegex.test(v)){ if(showErrors) setError('email','Enter a valid email address'); return false; }
+      setSuccess('email'); return true;
+    }
+    if(key==='phone'){
+      if(!v){ if(showErrors) setError('phone','Phone number is required'); return false; }
+      if(!phoneRegex.test(v)){ if(showErrors) setError('phone','Enter a valid 10-digit Indian mobile number'); return false; }
+      setSuccess('phone'); return true;
+    }
+    if(key==='service'){
+      if(!v){ if(showErrors) setError('service','Please select a service'); return false; }
+      setSuccess('service'); return true;
+    }
+    if(key==='message'){
+      if(!v){ if(showErrors) setError('message','Message is required'); return false; }
+      if(v.length<10){ if(showErrors) setError('message','Message must be at least 10 characters'); return false; }
+      setSuccess('message'); return true;
+    }
+    return true;
   }
 
   function validate(showErrors){
     let ok = true;
-    const v = {};
-    for(const k in fields){ v[k] = (fields[k].el?.value || '').trim(); }
-
-    // Name
-    if(!v.name){ if(showErrors) setError('name','Name is required'); ok = false; }
-    else setSuccess('name');
-
-    // Company — always optional, always clear
-    clearState('company');
-
-    // Email
-    if(!v.email){ if(showErrors) setError('email','Email is required'); ok = false; }
-    else if(!emailRegex.test(v.email)){ if(showErrors) setError('email','Enter a valid email address'); ok = false; }
-    else setSuccess('email');
-
-    // Phone — 10-digit Indian mobile
-    if(!v.phone){ if(showErrors) setError('phone','Phone number is required'); ok = false; }
-    else if(!phoneRegex.test(v.phone)){ if(showErrors) setError('phone','Enter a valid 10-digit Indian mobile number'); ok = false; }
-    else setSuccess('phone');
-
-    // Service
-    if(!v.service){ if(showErrors) setError('service','Please select a service'); ok = false; }
-    else setSuccess('service');
-
-    // Message
-    if(!v.message){ if(showErrors) setError('message','Message is required'); ok = false; }
-    else if(v.message.length < 10){ if(showErrors) setError('message','Message must be at least 10 characters'); ok = false; }
-    else setSuccess('message');
-
+    for(const key of Object.keys(fields)){
+      if(!validateField(key, showErrors)) ok = false;
+    }
     return ok;
   }
 
-  // Live re-validation once user has attempted submit or field already has error
+  // Per-field live behaviour:
+  // - If field currently has red: validate on every keystroke (clears red, shows green when valid)
+  // - If submitted once: validate on every keystroke
+  // - Click/focus on red field: immediately clear the red border only (not green yet)
   Object.keys(fields).forEach(key => {
     const f = fields[key];
-    if(!f.el) return;
+    if(!f.el || key==='service') return; // service handled by custom dropdown above
+
+    // Click/focus → always clear any color state (red or green) back to neutral
+    f.el.addEventListener('focus', () => {
+      const vis = getVisual(key);
+      vis.classList.remove('error','success');
+      if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
+    });
+
     f.el.addEventListener('input', () => {
-      if(f.el.classList.contains('error') || form.dataset.submitted === '1') validate(true);
+      const submitted = form.dataset.submitted === '1';
+      if(submitted){
+        validateField(key, true);
+      }
     });
+
     f.el.addEventListener('blur', () => {
-      if(form.dataset.submitted === '1') validate(true);
+      const vis = getVisual(key);
+      vis.classList.remove('error','success');
+      if(f.err){ f.err.textContent=''; f.err.classList.remove('show'); }
     });
+  });
+
+  // Service trigger: blur closes dropdown only when focus moves outside the whole widget
+  trigger.addEventListener('blur', (e)=>{
+    // Use a short delay so that a click on a dropdown option registers first
+    setTimeout(()=>{
+      if(!document.activeElement || !dropdown.contains(document.activeElement)){
+        closeDropdown();
+      }
+    }, 150);
   });
 
   form.addEventListener('submit', async (e) => {
@@ -2204,6 +2900,10 @@ document.querySelectorAll('.section-head, .service-card, .why-item, .info-card, 
       successBox.classList.add('show');
       form.reset();
       Object.keys(fields).forEach(clearState);
+      // Reset custom select
+      triggerTxt.textContent = 'Select a service';
+      trigger.classList.remove('has-value','error','success');
+      dropdown.querySelectorAll('.custom-select-option').forEach(o=>o.classList.remove('selected'));
       form.dataset.submitted = '0';
       setTimeout(() => successBox.classList.remove('show'), 3000);
 
@@ -2224,6 +2924,33 @@ if(window.innerWidth <= 640){
   const hint = document.querySelector('.swipe-hint');
   if(hint) hint.style.display = 'flex';
 }
+
+// DISABLE ZOOM IN/OUT 
+// Block Ctrl/Cmd + wheel (zoom by scrolling)
+window.addEventListener('wheel', (e) => {
+  if (e.ctrlKey || e.metaKey) e.preventDefault();
+}, { passive: false });
+
+// Block Ctrl/Cmd + (+, -, 0) keys
+window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) &&
+      ['+', '-', '=', '0'].includes(e.key)) {
+    e.preventDefault();
+  }
+});
+
+// DISABLE ZOOM IN/OUT SAFARI/IOS
+document.addEventListener('gesturestart', (e) => e.preventDefault());
+document.addEventListener('gesturechange', (e) => e.preventDefault());
+document.addEventListener('gestureend', (e) => e.preventDefault());
+
+// Prevent double-tap zoom
+let lastTouch = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouch <= 300) e.preventDefault();
+  lastTouch = now;
+}, { passive: false });
 </script>
 
 </body>
