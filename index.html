@@ -1034,8 +1034,8 @@ section{padding:120px 0;position:relative}
   background:rgba(239,68,68,0.05) !important;
 }
 .custom-select-trigger.success{
-  border-color:#2ea843 !important;
-  background:rgba(46,168,67,0.04) !important;
+  /* border-color:#2ea843 !important; */
+  /* background:rgba(46,168,67,0.04) !important; */
 }
 .custom-select-arrow{
   width:16px;height:16px;flex-shrink:0;
@@ -1365,7 +1365,7 @@ section{padding:120px 0;position:relative}
     <div class="container hero-inner">
       <div class="hero-pill">
         <span class="dot"></span>
-        Headquartered in Bengaluru · Established 2026
+        We Are
       </div>
 
       <h1 class="hero-title">
@@ -2003,7 +2003,7 @@ section{padding:120px 0;position:relative}
     </div>
 
     <div class="footer-bottom">
-      <div>© 2026 UWAY Digital Solutions. All rights reserved.</div>
+      <div>© 2026 UWAY . All rights reserved.</div>
       <div class="pulse"><span class="dot"></span> Available for new projects</div>
     </div>
   </div>
@@ -2704,10 +2704,11 @@ document.querySelectorAll('.section-head, .service-card, .why-item, .info-card, 
     if(e.key==='Escape') closeDropdown();
   });
   document.addEventListener('click',()=>closeDropdown());
-  dropdown.addEventListener('click',(e)=>{
-    e.stopPropagation();
+  dropdown.addEventListener('mousedown',(e)=>{
+    // Use mousedown so it fires before the trigger's blur event
     const opt = e.target.closest('.custom-select-option');
     if(!opt) return;
+    e.preventDefault(); // Prevent blur from firing on the trigger
     const val = opt.dataset.value;
     const label = opt.textContent.trim();
     hiddenSel.value = val;
@@ -2724,6 +2725,7 @@ document.querySelectorAll('.section-head, .service-card, .why-item, .info-card, 
       if(err){ err.textContent=''; err.classList.remove('show'); }
     }
   });
+  dropdown.addEventListener('click',(e)=>{ e.stopPropagation(); });
 
   const fields = {
     name:    { el: document.getElementById('name'),    err: document.getElementById('nameError'),    required: true },
