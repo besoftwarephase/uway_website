@@ -2586,7 +2586,7 @@ const reviews = [
 ];
 const star = '<svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>';
 function makeReviewCard(r){
-  return `<article class="review-card"><div class="quote-mark">"</div><div class="review-stars">${star.repeat(5)}</div><p class="review-text">${r.text}</p><div class="review-person"><div class="review-img">${r.init}</div><div class="review-meta"><span class="review-name">${r.name}</span><span class="review-role">${r.role}</span></div><span class="review-co">${r.co}</span></div></article>`;
+  return `<article class="review-card"><div class="quote-mark">"</div><div class="review-stars">${star}</div><p class="review-text">${r.text}</p><div class="review-person"><div class="review-img">${r.init}</div><div class="review-meta"><span class="review-name">${r.name}</span><span class="review-role">${r.role}</span></div><span class="review-co">${r.co}</span></div></article>`;
 }
 const reviewsTrack = document.getElementById('reviewsTrack');
 if(reviewsTrack){
