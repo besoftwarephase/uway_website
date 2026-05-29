@@ -2570,16 +2570,7 @@ document.querySelectorAll('[data-card]').forEach(card => {
 // MARQUEE LOGOS
 const brands = [
   {name:'DRBITES', icon:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.2 8.2C10 7.2 11 7 12 7 C13 7 14 7.2 14.8 8.2 C15.8 9.4 15.5 11 14.8 12.4 C14.3 13.4 14 14.5 13.7 15.8 C13.5 16.8 13.2 17 12.8 17 C12.4 17 12.3 16 12 15 C11.7 16 11.6 17 11.2 17 C10.8 17 10.5 16.8 10.3 15.8 C10 14.5 9.7 13.4 9.2 12.4 C8.5 11 8.2 9.4 9.2 8.2Z"/>'},
-  {name:'NORTHWAVE', icon:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18"/>'},
-  {name:'LUMEN.IO', icon:'<path d="M5 12c0-3.866 3.134-7 7-7s7 3.134 7 7H5z"/><path d="M12 12v9"/>'},
-  {name:'ATLAS&CO', icon:'<polygon points="12,3 21,9 21,15 12,21 3,15 3,9"/>'},
-  {name:'VERTEX', icon:'<polygon points="12,3 22,21 2,21"/>'},
-  {name:'KAIA LABS', icon:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/>'},
-  {name:'ORYX&PALM', icon:'<path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="4"/>'},
-  {name:'NIMBUS', icon:'<path d="M6 16a4 4 0 1 1 1-7.9 5 5 0 0 1 9.7-.6A4 4 0 0 1 18 16H6z"/>'},
-  {name:'HELIOS', icon:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>'},
-  {name:'KORDA', icon:'<path d="M3 12c4-8 14-8 18 0-4 8-14 8-18 0z"/><circle cx="12" cy="12" r="2"/>'},
-  {name:'SAVANNA', icon:'<path d="M3 18h18M5 18V8l3-2 3 2v10M14 18V11l3-2 3 2v7"/>'},
+ 
 ];
 const track = document.getElementById('marqueeTrack');
 function makeLogo(b){
@@ -2589,14 +2580,9 @@ track.innerHTML = brands.map(makeLogo).join('') + brands.map(makeLogo).join('');
 
 // REVIEWS
 const reviews = [
-  {init:'BI', name:'Bharathi', role:'Co-Founder', co:'DR BITES', text:'We had a great experience working with  bliend team for our dental clinic website project. Their work was extremely quick, prompt, and professional from start to finish. They made every edit we requested without any delay and delivered the website in oN time. It’s refreshing to see such a young team handling projects so efficiently.'},
-  {init:'MN', name:'Muruganantham', role:'Product Manager', co:'Sri Shakthi Tex', text:'I highly recommend UWAY. After years facing competition, they confidently handled our project without discussing the budget first, delivering modern design, flawless execution, professionalism, and results beyond expectations.'},
-  {init:'AR', name:'Aarav Reddy', role:'Founder & CEO', co:'NORTHWAVE', text:'UWAY rebuilt our brand from the ground up. The strategy, the visuals, the launch campaign — every detail felt intentional. Within three months our pipeline doubled.'},
-  {init:'SK', name:'Sara Kannan', role:'Head of Marketing', co:'LUMEN.IO', text:'The way they integrated AI into our content workflow was eye-opening. We\'re producing four times the volume with sharper insights and far better targeting.'},
-  {init:'MJ', name:'Marcus Johnson', role:'VP Growth', co:'ATLAS&CO', text:'Their performance team treats every rupee like it\'s their own. ROAS climbed 3.2x in the first quarter and they kept finding new levers to pull. Genuinely strategic partners.'},
-  {init:'PD', name:'Priya Desai', role:'Brand Director', co:'VERTEX', text:'A new website, a refreshed identity, and a content engine — all delivered with rare design taste. UWAY raised our entire visual standard.'},
-  {init:'LT', name:'Lim Tian', role:'Co-Founder', co:'KAIA LABS', text:'We came in needing a landing page. We left with a positioning framework, a content system, and a confident voice. They get business, not just design.'},
-  {init:'FZ', name:'Fatima Zayed', role:'Marketing Lead', co:'ORYX&PALM', text:'Fast, sharp, and very thoughtful. The campaign they built for our Dubai launch outperformed every benchmark we\'d seen from past agencies.'},
+  {name:'Bharathi', role:'Co-Founder', co:'DR BITES', text:'We had a great experience working with  UWAY team for our dental clinic website project. Their work was extremely quick professional from start to finish. They made every edit we requested without any delay. It’s refreshing to see such a young team handling projects so efficiently.'},
+  {name:'Muruganantham', role:'Product Manager', co:'SRI SHAKTHI TEX', text:'I highly recommend UWAY. After years facing competition, they confidently handled our project without discussing the budget first, delivering modern design, flawless execution, professionalism, and results beyond expectations.'},
+
 ];
 const star = '<svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>';
 function makeReviewCard(r){
