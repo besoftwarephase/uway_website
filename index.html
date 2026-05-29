@@ -678,6 +678,7 @@ section{padding:120px 0;position:relative}
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
   background:var(--bg-2);
+  display: none;
 }
 .marquee-label{
   text-align:center;
@@ -766,7 +767,7 @@ section{padding:120px 0;position:relative}
   flex:1;
 }
 .review-person{
-  display:flex;align-items:center;gap:14px;
+  display:flex;align-items:flex-start;flex-direction:column;gap:0;
   padding-top:20px;
   border-top:1px solid rgba(0,0,0,0.08);
 }
@@ -788,14 +789,15 @@ section{padding:120px 0;position:relative}
 .review-name{font-size:14.5px;font-weight:700;color:#0a0a0c;letter-spacing:-.01em}
 .review-role{font-size:12.5px;color:#6a6d76}
 .review-co{
-  margin-left:auto;
+  display:inline-block;
+  margin-top:6px;
   font-size:11px;font-weight:700;
   letter-spacing:.04em;
   color:#3b6ef5;
   padding:5px 10px;
   background:rgba(59,110,245,0.08);
   border-radius:6px;
-  flex-shrink:0;
+  align-self:flex-start;
 }
 
 @media (max-width:680px){
@@ -1295,6 +1297,68 @@ section{padding:120px 0;position:relative}
 /* ============================================================
    UTILITIES
    ============================================================ */
+/* DR BITES marquee text animation */
+/* @keyframes drbitesGlow {
+  0%,100%{
+    background-position:0% 50%;
+    opacity:.7;
+  }
+  50%{
+    background-position:100% 50%;
+    opacity:1;
+  }
+} */
+/* .marquee-logo.drbites-logo span {
+  background: linear-gradient(90deg, #3b6ef5, #a78bfa, #5a8bff, #3b6ef5);
+  background-size: 300% 100%;
+  -webkit-text-fill-color: transparent;
+  animation: drbitesGlow 2.4s ease-in-out infinite;
+  opacity: 1 !important;
+} */
+/* .marquee-logo.drbites-logo {
+  opacity: 1 !important;
+} */
+
+/* ============================================================
+   CLIENT LOGO MARQUEE
+   ============================================================ */
+.marquee{
+  padding:80px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:var(--bg-2);
+}
+.marquee-label{
+  text-align:center;
+  font-size:12px;color:var(--grey);
+  letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:36px;
+}
+.marquee-track-wrap{
+  position:relative;overflow:hidden;
+  mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+.marquee-track{
+  display:flex;align-items:center;gap:80px;
+  width:max-content;
+  animation:scroll 40s linear infinite;
+}
+@keyframes scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.marquee-logo{
+  font-size:24px;font-weight:700;
+  color:var(--grey);letter-spacing:-.025em;
+  opacity:.55;transition:opacity .3s var(--ease), color .3s var(--ease);
+  display:flex;align-items:center;gap:10px;
+  white-space:nowrap;
+}
+.marquee-logo:hover{opacity:1;color:var(--white)}
+.marquee-logo svg{width:26px;height:26px}
+
+
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-out), transform .8s var(--ease-out)}
 .reveal.in{opacity:1;transform:translateY(0)}
 
@@ -2568,25 +2632,60 @@ document.querySelectorAll('[data-card]').forEach(card => {
 });
 
 // MARQUEE LOGOS
-const brands = [
-  {name:'DRBITES', icon:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.2 8.2C10 7.2 11 7 12 7 C13 7 14 7.2 14.8 8.2 C15.8 9.4 15.5 11 14.8 12.4 C14.3 13.4 14 14.5 13.7 15.8 C13.5 16.8 13.2 17 12.8 17 C12.4 17 12.3 16 12 15 C11.7 16 11.6 17 11.2 17 C10.8 17 10.5 16.8 10.3 15.8 C10 14.5 9.7 13.4 9.2 12.4 C8.5 11 8.2 9.4 9.2 8.2Z"/>'},
+// const brands = [
+//   {name:'DRBITES', icon:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.2 8.2C10 7.2 11 7 12 7 C13 7 14 7.2 14.8 8.2 C15.8 9.4 15.5 11 14.8 12.4 C14.3 13.4 14 14.5 13.7 15.8 C13.5 16.8 13.2 17 12.8 17 C12.4 17 12.3 16 12 15 C11.7 16 11.6 17 11.2 17 C10.8 17 10.5 16.8 10.3 15.8 C10 14.5 9.7 13.4 9.2 12.4 C8.5 11 8.2 9.4 9.2 8.2Z"/>'},
  
+// ];
+// const track = document.getElementById('marqueeTrack');
+// function makeLogo(b){
+//   const extra = b.name === 'DRBITES' ? ' drbites-logo' : '';
+//   return `<div class="marquee-logo${extra}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${b.icon}</svg><span>${b.name}</span></div>`;
+// }
+// track.innerHTML = brands.map(makeLogo).join('') + brands.map(makeLogo).join('');
+
+// MARQUEE LOGOS
+const brands = [
+  {
+    name: 'DRBITES',
+    icon: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.2 8.2C10 7.2 11 7 12 7 C13 7 14 7.2 14.8 8.2 C15.8 9.4 15.5 11 14.8 12.4 C14.3 13.4 14 14.5 13.7 15.8 C13.5 16.8 13.2 17 12.8 17 C12.4 17 12.3 16 12 15 C11.7 16 11.6 17 11.2 17 C10.8 17 10.5 16.8 10.3 15.8 C10 14.5 9.7 13.4 9.2 12.4 C8.5 11 8.2 9.4 9.2 8.2Z"/>'
+  },
 ];
+
 const track = document.getElementById('marqueeTrack');
-function makeLogo(b){
-  return `<div class="marquee-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${b.icon}</svg><span>${b.name}</span></div>`;
+
+function makeLogo(b) {
+  const extra = b.name === 'DRBITES' ? ' drbites-logo' : '';
+
+  return `
+    <div class="marquee-logo${extra}">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        ${b.icon}
+      </svg>
+
+      <span>${b.name}</span>
+    </div>
+  `;
 }
-track.innerHTML = brands.map(makeLogo).join('') + brands.map(makeLogo).join('');
+
+// SINGLE SET ONLY — NO DUPLICATE
+track.innerHTML = brands.map(makeLogo).join('');
 
 // REVIEWS
 const reviews = [
-  {name:'Bharathi', role:'Co-Founder', co:'DR BITES', text:'We had a great experience working with  UWAY team for our dental clinic website project. Their work was extremely quick professional from start to finish. They made every edit we requested without any delay. It’s refreshing to see such a young team handling projects so efficiently.'},
-  {name:'Muruganantham', role:'Product Manager', co:'SRI SHAKTHI TEX', text:'I highly recommend UWAY. After years facing competition, they confidently handled our project without discussing the budget first, delivering modern design, flawless execution, professionalism, and results beyond expectations.'},
+  {name:'Bharathi', role:'Co-Founder', co:'DR BITES', text:'We had a great experience working with  UWAY team for our dental clinic website project. Their work was extremely quick professional. They made every edit we requested without any delay. It’s refreshing to see such a young team handling projects so efficiently.'},
+  {name:'Muruganantham', role:'Product Manager', co:'SRI SHAKTHI TEX', text:'I highly recommend UWAY for their professionalism and confidence. They created a modern website that perfectly matched our vision and current trends. Their execution exceeded expectations, and every detail was handled efficiently, making the entire experience smooth, reliable, and truly impressive.'},
 
 ];
 const star = '<svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>';
 function makeReviewCard(r){
-  return `<article class="review-card"><div class="quote-mark">"</div><div class="review-stars">${star}</div><p class="review-text">${r.text}</p><div class="review-person"><div class="review-img">${r.init}</div><div class="review-meta"><span class="review-name">${r.name}</span><span class="review-role">${r.role}</span></div><span class="review-co">${r.co}</span></div></article>`;
+  return `<article class="review-card"><div class="quote-mark">"</div><div class="review-stars">${star.repeat(5)}</div><p class="review-text">${r.text}</p><div class="review-person"><div class="review-meta"><span class="review-name">${r.name}</span><span class="review-role">${r.role}</span><span class="review-co">${r.co}</span></div></div></article>`;
 }
 const reviewsTrack = document.getElementById('reviewsTrack');
 if(reviewsTrack){
